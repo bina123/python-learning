@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Learn Python basics",
+    "priority": "high",
+    "completed": true
+  },
+  {
+    "id": 2,
+    "title": "Build Django project",
+    "priority": "high",
+    "completed": false
+  },
+  {
+    "id": 3,
+    "title": "Study Machine Learning",
+    "priority": "medium",
+    "completed": true
+  },
+  {
+    "id": 4,
+    "title": "Review React",
+    "priority": "medium",
+    "completed": false
+  },
+  {
+    "id": 5,
+    "title": "Read documentation",
+    "priority": "low",
+    "completed": false
+  }
+]

@@ -1,0 +1,44 @@
+{
+  "products": [
+    {
+      "id": "PROD1001",
+      "name": "Dell Laptop",
+      "price": 75000,
+      "stock": 9,
+      "category": "Electronics"
+    },
+    {
+      "id": "PROD1002",
+      "name": "iPhone 14",
+      "price": 85000,
+      "stock": 14,
+      "category": "Electronics"
+    },
+    {
+      "id": "PROD1003",
+      "name": "Python T-Shirt",
+      "price": 500,
+      "stock": 47,
+      "category": "Clothing"
+    },
+    {
+      "id": "PROD1004",
+      "name": "Python Crash Course",
+      "price": 1200,
+      "stock": 28,
+      "category": "Books"
+    }
+  ],
+  "customers": [
+    {
+      "id": "CUST1001",
+      "name": "Bina Pithadiya",
+      "email": "bina@example.com"
+    },
+    {
+      "id": "CUST1002",
+      "name": "Raj Kumar",
+      "email": "raj@example.com"
+    }
+  ]
+}

@@ -1,2 +1,40 @@
-venv/
 day5_practice/
+.pytest_cache/
+
+
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+day*_practice/
+day*_todos.json
+day*_review.json
+day*_store_data.json
+*.log
+
+# Sensitive data
+config.json
+secrets.json
+*.db
+*.sqlite3

@@ -1,0 +1,67 @@
+<!-- blog/templates/dashboard/comments.html -->
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Comments{% endblock %}
+{% block page_title %}Manage Comments{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Comments on Your Posts</h2>
+
+    {% if comments %}
+    <table>
+        <thead>
+            <tr>
+                <th>Author</th>
+                <th>Comment</th>
+                <th>Post</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comment in comments %}
+            <tr>
+                <td>
+                    <strong>{{ comment.author_name }}</strong>
+                    <br>
+                    <small style="color: #7f8c8d;">{{ comment.author_email }}</small>
+                </td>
+                <td>
+                    {{ comment.content|truncatewords:20 }}
+                </td>
+                <td>
+                    <a href="{% url 'blog:post_detail' comment.post.slug %}">
+                        {{ comment.post.title|truncatewords:5 }}
+                    </a>
+                </td>
+                <td>
+                    {% if comment.is_approved %}
+                    <span class="badge badge-success">Approved</span>
+                    {% else %}
+                    <span class="badge badge-warning">Pending</span>
+                    {% endif %}
+                </td>
+                <td>{{ comment.created_at|date:"M d, Y" }}</td>
+                <td>
+                    {% if not comment.is_approved %}
+                    <a href="{% url 'dashboard:comment_approve' comment.pk %}" class="btn btn-sm btn-success"
+                        onclick="return confirm('Approve this comment?')">
+                        Approve
+                    </a>
+                    {% endif %}
+                    <a href="{% url 'dashboard:comment_delete' comment.pk %}" class="btn btn-sm btn-danger"
+                        onclick="return confirm('Delete this comment?')">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No comments yet on your posts.</p>
+    {% endif %}
+</div>
+{% endblock %}

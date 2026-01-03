@@ -1,0 +1,103 @@
+<!-- blog/templates/dashboard/home.html -->
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Dashboard Home{% endblock %}
+{% block page_title %}Dashboard Overview{% endblock %}
+
+{% block content %}
+<!-- Statistics Cards -->
+<div class="stats">
+    <div class="stat-card">
+        <h3>Total Posts</h3>
+        <div class="number">{{ total_posts }}</div>
+    </div>
+
+    <div class="stat-card">
+        <h3>Published</h3>
+        <div class="number" style="color: #27ae60;">{{ published_posts }}</div>
+    </div>
+
+    <div class="stat-card">
+        <h3>Drafts</h3>
+        <div class="number" style="color: #f39c12;">{{ draft_posts }}</div>
+    </div>
+
+    <div class="stat-card">
+        <h3>Total Views</h3>
+        <div class="number" style="color: #3498db;">{{ total_views }}</div>
+    </div>
+</div>
+
+<!-- Recent Posts -->
+<div class="card">
+    <h2>Recent Posts</h2>
+
+    {% if recent_posts %}
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Views</th>
+                <th>Created</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in recent_posts %}
+            <tr>
+                <td>
+                    <strong>{{ post.title }}</strong>
+                </td>
+                <td>
+                    {% if post.status == 'published' %}
+                    <span class="badge badge-success">Published</span>
+                    {% else %}
+                    <span class="badge badge-warning">Draft</span>
+                    {% endif %}
+                </td>
+                <td>{{ post.views }}</td>
+                <td>{{ post.created_at|date:"M d, Y" }}</td>
+                <td>
+                    <a href="{% url 'dashboard:post_edit' post.slug %}" class="btn btn-sm">Edit</a>
+                    <a href="{% url 'blog:post_detail' post.slug %}" class="btn btn-sm btn-success">View</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No posts yet. <a href="{% url 'dashboard:post_create' %}">Create your first post!</a></p>
+    {% endif %}
+</div>
+
+<!-- Recent Comments -->
+<div class="card">
+    <h2>Recent Comments</h2>
+
+    {% if recent_comments %}
+    <table>
+        <thead>
+            <tr>
+                <th>Author</th>
+                <th>Comment</th>
+                <th>Post</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comment in recent_comments %}
+            <tr>
+                <td><strong>{{ comment.author_name }}</strong></td>
+                <td>{{ comment.content|truncatewords:15 }}</td>
+                <td>{{ comment.post.title }}</td>
+                <td>{{ comment.created_at|date:"M d, Y" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No comments yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

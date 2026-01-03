@@ -1,0 +1,145 @@
+<!-- blog/templates/dashboard/post_form.html -->
+{% extends 'dashboard/base.html' %}
+
+{% block title %}{{ action }} Post{% endblock %}
+{% block page_title %}{{ action }} Post{% endblock %}
+
+{% block content %}
+<div class="card">
+    <form method="post">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <div class="message error">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+        <!-- Title -->
+        <div style="margin-bottom: 1.5rem;">
+            <label for="{{ form.title.id_for_label }}"
+                style="display: block; margin-bottom: 0.5rem; font-weight: bold;">
+                Title *
+            </label>
+            <input type="text" name="{{ form.title.name }}" value="{{ form.title.value|default:'' }}"
+                id="{{ form.title.id_for_label }}"
+                style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem;">
+            {% if form.title.errors %}
+            <div style="color: #e74c3c; font-size: 0.9rem; margin-top: 0.25rem;">
+                {{ form.title.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Slug -->
+        <div style="margin-bottom: 1.5rem;">
+            <label for="{{ form.slug.id_for_label }}" style="display: block; margin-bottom: 0.5rem; font-weight: bold;">
+                Slug *
+            </label>
+            <input type="text" name="{{ form.slug.name }}" value="{{ form.slug.value|default:'' }}"
+                id="{{ form.slug.id_for_label }}"
+                style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem;">
+            <small style="color: #666;">URL-friendly version (e.g., my-post-title)</small>
+            {% if form.slug.errors %}
+            <div style="color: #e74c3c; font-size: 0.9rem; margin-top: 0.25rem;">
+                {{ form.slug.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Content -->
+        <div style="margin-bottom: 1.5rem;">
+            <label for="{{ form.content.id_for_label }}"
+                style="display: block; margin-bottom: 0.5rem; font-weight: bold;">
+                Content *
+            </label>
+            <textarea name="{{ form.content.name }}" id="{{ form.content.id_for_label }}" rows="12"
+                style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem; font-family: inherit;">{{ form.content.value|default:'' }}</textarea>
+            {% if form.content.errors %}
+            <div style="color: #e74c3c; font-size: 0.9rem; margin-top: 0.25rem;">
+                {{ form.content.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Excerpt -->
+        <div style="margin-bottom: 1.5rem;">
+            <label for="{{ form.excerpt.id_for_label }}"
+                style="display: block; margin-bottom: 0.5rem; font-weight: bold;">
+                Excerpt
+            </label>
+            <textarea name="{{ form.excerpt.name }}" id="{{ form.excerpt.id_for_label }}" rows="3"
+                style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; font-size: 1rem; font-family: inherit;">{{ form.excerpt.value|default:'' }}</textarea>
+            <small style="color: #666;">Short summary (optional)</small>
+            {% if form.excerpt.errors %}
+            <div style="color: #e74c3c; font-size: 0.9rem; margin-top: 0.25rem;">
+                {{ form.excerpt.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Categories -->
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">
+                Categories
+            </label>
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                {% for checkbox in form.categories %}
+                <label style="display: flex; align-items: center; cursor: pointer;">
+                    {{ checkbox.tag }}
+                    <span style="margin-left: 0.5rem;">{{ checkbox.choice_label }}</span>
+                </label>
+                {% endfor %}
+            </div>
+            {% if form.categories.errors %}
+            <div style="color: #e74c3c; font-size: 0.9rem; margin-top: 0.25rem;">
+                {{ form.categories.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Status -->
+        <div style="margin-bottom: 1.5rem;">
+            <label for="{{ form.status.id_for_label }}"
+                style="display: block; margin-bottom: 0.5rem; font-weight: bold;">
+                Status *
+            </label>
+            {{ form.status }}
+            {% if form.status.errors %}
+            <div style="color: #e74c3c; font-size: 0.9rem; margin-top: 0.25rem;">
+                {{ form.status.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Submit Buttons -->
+        <div>
+            <button type="submit" class="btn btn-success">
+                {{ action }} Post
+            </button>
+            <a href="{% url 'dashboard:posts' %}" class="btn" style="background: #95a5a6; margin-left: 0.5rem;">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+
+<!-- Auto-generate slug from title -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const titleInput = document.getElementById('{{ form.title.id_for_label }}');
+        const slugInput = document.getElementById('{{ form.slug.id_for_label }}');
+
+        // Only auto-generate if slug is empty (creating new post)
+        {% if not post %}
+        titleInput.addEventListener('input', function () {
+            const slug = this.value
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+            slugInput.value = slug;
+        });
+        {% endif %}
+    });
+</script>
+{% endblock %}

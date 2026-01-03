@@ -105,6 +105,48 @@
             color: #7f8c8d;
             margin-top: 3rem;
         }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        small {
+            display: block;
+            margin-top: 0.25rem;
+            color: #7f8c8d;
+            font-size: 0.875rem;
+        }
+
+        .errorlist {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0 0 0;
+            color: #e74c3c;
+            font-size: 0.9rem;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 0.5rem;
+        }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
@@ -115,7 +157,17 @@
         <div>
             <a href="{% url 'blog:home' %}">Home</a>
             <a href="{% url 'blog:post_list' %}">All Posts</a>
+            <a href="{% url 'blog:contact' %}">Contact</a>
+
+            {% if user.is_authenticated %}
+            <a href="{% url 'blog:post_create' %}">Create Post</a>
             <a href="/admin/">Admin</a>
+            <span style="color: #ecf0f1; margin-left: 1rem;">
+                👤 {{ user.username }}
+            </span>
+            {% else %}
+            <a href="/admin/">Login</a>
+            {% endif %}
         </div>
     </nav>
 

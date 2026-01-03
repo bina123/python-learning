@@ -1,0 +1,88 @@
+<!-- blog/templates/blog/contact.html -->
+{% extends 'base.html' %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Contact Us</h1>
+
+    <!-- Display messages (like Laravel's session flash messages) -->
+    {% if messages %}
+    {% for message in messages %}
+    <div
+        style="padding: 1rem; margin: 1rem 0; background: {% if message.tags == 'success' %}#d4edda{% else %}#f8d7da{% endif %}; border-radius: 4px;">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <form method="post">
+        <!-- CSRF Token (like Laravel's @csrf) -->
+        {% csrf_token %}
+
+        <!-- Display non-field errors -->
+        {% if form.non_field_errors %}
+        <div style="color: red; margin-bottom: 1rem;">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+        <!-- Name Field -->
+        <div style="margin-bottom: 1rem;">
+            <label for="{{ form.name.id_for_label }}">Name *</label>
+            {{ form.name }}
+            {% if form.name.errors %}
+            <div style="color: red; font-size: 0.9rem;">
+                {{ form.name.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Email Field -->
+        <div style="margin-bottom: 1rem;">
+            <label for="{{ form.email.id_for_label }}">Email *</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+            <div style="color: red; font-size: 0.9rem;">
+                {{ form.email.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Subject Field -->
+        <div style="margin-bottom: 1rem;">
+            <label for="{{ form.subject.id_for_label }}">Subject *</label>
+            {{ form.subject }}
+            {% if form.subject.errors %}
+            <div style="color: red; font-size: 0.9rem;">
+                {{ form.subject.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Message Field -->
+        <div style="margin-bottom: 1rem;">
+            <label for="{{ form.message.id_for_label }}">Message *</label>
+            {{ form.message }}
+            {% if form.message.errors %}
+            <div style="color: red; font-size: 0.9rem;">
+                {{ form.message.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn">Send Message</button>
+    </form>
+</div>
+
+<!-- Automatic form rendering (quick way) -->
+<div class="card">
+    <h2>Alternative: Auto-Rendered Form</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }} <!-- Renders entire form as <p> tags -->
+        <button type="submit" class="btn">Send</button>
+    </form>
+</div>
+{% endblock %}

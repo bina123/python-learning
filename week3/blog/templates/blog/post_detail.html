@@ -26,9 +26,28 @@
     </div>
 </div>
 
+{% if user.is_authenticated and user == post.author %}
+<div class="card">
+    <h3>Manage Post</h3>
+    <a href="{% url 'blog:post_edit' post.slug %}" class="btn" style="margin-right: 0.5rem;">
+        ✏️ Edit Post
+    </a>
+    <a href="{% url 'blog:post_delete' post.slug %}" class="btn" style="background: #e74c3c;">
+        🗑️ Delete Post
+    </a>
+</div>
+{% endif %}
+
+
 <!-- Comments Section -->
 <div class="card">
     <h3>Comments ({{ comments.count }})</h3>
+
+    <div style="margin-bottom: 1rem;">
+        <a href="{% url 'blog:add_comment' post.slug %}" class="btn">
+            💬 Add Comment
+        </a>
+    </div>
 
     {% if comments %}
     {% for comment in comments %}

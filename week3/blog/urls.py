@@ -20,6 +20,13 @@ urlpatterns = [
     # Like: Route::get('/category/{slug}', [CategoryController::class, 'show'])
     path('category/<slug:slug>/', views.category_posts, name='category_posts'),
     
+    # NEW: Form URLs
+    path('contact/', views.contact, name='contact'),
+    path('create/', views.post_create, name='post_create'),
+    path('posts/<slug:slug>/edit/', views.post_edit, name='post_edit'),
+    path('posts/<slug:slug>/delete/', views.post_delete, name='post_delete'),
+    path('posts/<slug:slug>/comment/', views.add_comment, name='add_comment'),
+    
     # Class-based views
     path('cbv/posts/', views.PostListView.as_view(), name='post_list_cbv'),
     path('cbv/posts/<slug:slug>/', views.PostDetailView.as_view(), name='post_detail_cbv'),

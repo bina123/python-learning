@@ -1,0 +1,123 @@
+<!-- blog/templates/blog/post_create.html -->
+{% extends 'base.html' %}
+
+{% block title %}{% if editing %}Edit{% else %}Create{% endif %} Post{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>{% if editing %}Edit Post{% else %}Create New Post{% endif %}</h1>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div
+        style="padding: 1rem; margin: 1rem 0; background: {% if message.tags == 'success' %}#d4edda{% elif message.tags == 'error' %}#f8d7da{% else %}#fff3cd{% endif %}; border-radius: 4px;">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <div style="color: red; margin-bottom: 1rem;">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+        <!-- Title -->
+        <div style="margin-bottom: 1.5rem;">
+            <label for="{{ form.title.id_for_label }}"
+                style="display: block; margin-bottom: 0.5rem; font-weight: bold;">
+                Title *
+            </label>
+            {{ form.title }}
+            {% if form.title.errors %}
+            <div style="color: red; font-size: 0.9rem; margin-top: 0.25rem;">
+                {{ form.title.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Slug -->
+        <div style="margin-bottom: 1.5rem;">
+            <label for="{{ form.slug.id_for_label }}" style="display: block; margin-bottom: 0.5rem; font-weight: bold;">
+                Slug *
+            </label>
+            {{ form.slug }}
+            <small style="color: #666;">URL-friendly version of title (e.g., my-post-title)</small>
+            {% if form.slug.errors %}
+            <div style="color: red; font-size: 0.9rem; margin-top: 0.25rem;">
+                {{ form.slug.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Content -->
+        <div style="margin-bottom: 1.5rem;">
+            <label for="{{ form.content.id_for_label }}"
+                style="display: block; margin-bottom: 0.5rem; font-weight: bold;">
+                Content *
+            </label>
+            {{ form.content }}
+            {% if form.content.errors %}
+            <div style="color: red; font-size: 0.9rem; margin-top: 0.25rem;">
+                {{ form.content.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Excerpt -->
+        <div style="margin-bottom: 1.5rem;">
+            <label for="{{ form.excerpt.id_for_label }}"
+                style="display: block; margin-bottom: 0.5rem; font-weight: bold;">
+                Excerpt
+            </label>
+            {{ form.excerpt }}
+            <small style="color: #666;">Short summary of the post (optional)</small>
+            {% if form.excerpt.errors %}
+            <div style="color: red; font-size: 0.9rem; margin-top: 0.25rem;">
+                {{ form.excerpt.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Categories -->
+        <div style="margin-bottom: 1.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">
+                Categories
+            </label>
+            {{ form.categories }}
+            {% if form.categories.errors %}
+            <div style="color: red; font-size: 0.9rem; margin-top: 0.25rem;">
+                {{ form.categories.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Status -->
+        <div style="margin-bottom: 1.5rem;">
+            <label for="{{ form.status.id_for_label }}"
+                style="display: block; margin-bottom: 0.5rem; font-weight: bold;">
+                Status *
+            </label>
+            {{ form.status }}
+            {% if form.status.errors %}
+            <div style="color: red; font-size: 0.9rem; margin-top: 0.25rem;">
+                {{ form.status.errors }}
+            </div>
+            {% endif %}
+        </div>
+
+        <div>
+            <button type="submit" class="btn">
+                {% if editing %}Update Post{% else %}Create Post{% endif %}
+            </button>
+            <a href="{% if editing %}{% url 'blog:post_detail' post.slug %}{% else %}{% url 'blog:post_list' %}{% endif %}"
+                class="btn" style="background: #95a5a6; margin-left: 0.5rem;">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

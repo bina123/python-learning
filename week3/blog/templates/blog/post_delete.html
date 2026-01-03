@@ -1,0 +1,26 @@
+<!-- blog/templates/blog/post_delete.html -->
+{% extends 'base.html' %}
+
+{% block title %}Delete Post{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Delete Post</h1>
+
+    <div style="background: #fff3cd; padding: 1rem; border-radius: 4px; margin: 1rem 0;">
+        <strong>⚠️ Warning:</strong> This action cannot be undone!
+    </div>
+
+    <p>Are you sure you want to delete the post <strong>"{{ post.title }}"</strong>?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn" style="background: #e74c3c;">
+            Yes, Delete Post
+        </button>
+        <a href="{% url 'blog:post_detail' post.slug %}" class="btn" style="background: #95a5a6; margin-left: 0.5rem;">
+            Cancel
+        </a>
+    </form>
+</div>
+{% endblock %}

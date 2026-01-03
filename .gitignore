@@ -38,3 +38,5 @@ config.json
 secrets.json
 *.db
 *.sqlite3
+
+week3/django-env

@@ -1,0 +1,52 @@
+<!-- blog/templates/blog/template_demo.html -->
+{% extends 'base.html' %}
+
+{% block title %}Template Demo{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Django Template Features Demo</h1>
+
+    <!-- Variables -->
+    <h2>1. Variables</h2>
+    <p>Simple: {{ variable }}</p>
+    <p>Dot notation: {{ post.title }}</p>
+    <p>Method call: {{ post.categories.all }}</p>
+
+    <!-- Filters -->
+    <h2>2. Filters</h2>
+    <p>Upper: {{ "hello"|upper }}</p>
+    <p>Length: {{ posts|length }}</p>
+    <p>Default: {{ empty_var|default:"Not set" }}</p>
+    <p>Date: {{ now|date:"F d, Y" }}</p>
+
+    <!-- If statements -->
+    <h2>3. If Statements</h2>
+    {% if posts %}
+    <p>We have {{ posts|length }} posts</p>
+    {% else %}
+    <p>No posts</p>
+    {% endif %}
+
+    <!-- For loops -->
+    <h2>4. For Loops</h2>
+    {% for post in posts %}
+    <p>{{ forloop.counter }}. {{ post.title }}</p>
+
+    {% if forloop.first %}
+    <p>This is the first item!</p>
+    {% endif %}
+
+    {% if forloop.last %}
+    <p>This is the last item!</p>
+    {% endif %}
+    {% empty %}
+    <p>No posts to display</p>
+    {% endfor %}
+
+    <!-- URL generation -->
+    <h2>5. URL Generation</h2>
+    <a href="{% url 'blog:home' %}">Home</a>
+    <a href="{% url 'blog:post_detail' 'my-slug' %}">Post Detail</a>
+</div>
+{% endblock %}

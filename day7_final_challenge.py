@@ -30,9 +30,9 @@ class Product(ABC):
         self._id = f"PROD{Product._product_counter}"
         self._name = name
         self._price = price
-        self._stock = stock
+        self._stock = stock #protected variable
     
-    @property
+    @property #Getter method
     def id(self):
         return self._id
     

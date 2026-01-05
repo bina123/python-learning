@@ -55,11 +55,13 @@ button:hover {
 }
 
 input,
-label {
+label,
+textarea {
   color: #7f8c8d;
 }
 
-input {
+input,
+textarea {
   background-color: #fff;
   border: 1px solid black;
 }

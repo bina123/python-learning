@@ -221,6 +221,7 @@ class PostWriteSerializer(serializers.ModelSerializer):
     category_ids = serializers.PrimaryKeyRelatedField(
         queryset=Category.objects.all(),
         many=True,
+        write_only=True,
         source='categories'
     )
     
@@ -234,17 +235,33 @@ class PostWriteSerializer(serializers.ModelSerializer):
             'category_ids',
             'status',
         ]
+        
+    def validate_slug(self, value):
+        """Ensure slug is unique."""
+        instance = self.instance
+        queryset = Post.objects.filter(slug=value)
+        
+        if instance:
+            queryset = queryset.exclude(pk=instance.pk)
+        
+        if queryset.exists():
+            raise serializers.ValidationError('A post with this slug already exists.')
+        
+        return value
+
+    def validate_title(self, value):
+        """Validate title length."""
+        if len(value) < 3:
+            raise serializers.ValidationError('Title must be at least 3 characters long.')
+        return value
     
     def create(self, validated_data):
         """Create post with author."""
         # Extract categories
         categories = validated_data.pop('categories', [])
         
-        # Get author from context (set in view)
-        author = self.context['request'].user
-        
         # Create post
-        post = Post.objects.create(author=author, **validated_data)
+        post = Post.objects.create(**validated_data)
         
         # Set categories
         post.categories.set(categories)

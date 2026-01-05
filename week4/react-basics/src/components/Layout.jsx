@@ -1,7 +1,16 @@
 // src/components/Layout.jsx
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 function Layout() {
+    const { user, isAuthenticated, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
+
     return (
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             {/* Header/Navbar */}
@@ -46,6 +55,56 @@ function Layout() {
                         }}>
                             About
                         </Link>
+
+                        {isAuthenticated ?
+                            (<div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                                <span style={{ color: '#ecf0f1', fontSize: '0.9rem' }}>
+                                    👤 {user.username}
+                                </span>
+                                <button
+                                    onClick={handleLogout}
+                                    style={{
+                                        padding: '0.5rem 1rem',
+                                        background: '#e74c3c',
+                                        color: 'white',
+                                        border: 'none',
+                                        borderRadius: '4px',
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    Logout
+                                </button>
+                            </div>
+                            ) :
+                            (
+                                <div style={{ display: 'flex', gap: '1rem' }}>
+                                    <Link
+                                        to="/login"
+                                        style={{
+                                            padding: '0.5rem 1rem',
+                                            background: '#3498db',
+                                            color: 'white',
+                                            textDecoration: 'none',
+                                            borderRadius: '4px',
+                                        }}
+                                    >
+                                        Login
+                                    </Link>
+                                    <Link
+                                        to="/register"
+                                        style={{
+                                            padding: '0.5rem 1rem',
+                                            background: '#27ae60',
+                                            color: 'white',
+                                            textDecoration: 'none',
+                                            borderRadius: '4px',
+                                        }}
+                                    >
+                                        Register
+                                    </Link>
+                                </div>
+                            )
+                        }
                     </nav>
                 </div>
             </header>
@@ -69,6 +128,11 @@ function Layout() {
                 textAlign: 'center'
             }}>
                 <p>© 2026 My Blog. Built with React + Django.</p>
+                {isAuthenticated && (
+                    <p style={{ fontSize: '0.9rem', marginTop: '0.5rem', opacity: 0.8 }}>
+                        Logged in as {user.username}
+                    </p>
+                )}
             </footer>
         </div>
     );

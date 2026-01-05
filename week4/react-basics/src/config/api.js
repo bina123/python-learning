@@ -10,6 +10,8 @@ export const API_ENDPOINTS = {
     login: `${API_BASE_URL}/api/auth/login/`,
     register: `${API_BASE_URL}/api/auth/register/`,
     profile: `${API_BASE_URL}/api/auth/profile/`,
+    changePassword: `${API_BASE_URL}/api/auth/change-password/`,
+    search: (query) => `${API_BASE_URL}/api/search/?q=${query}`,
 };
 
 export default API_BASE_URL;

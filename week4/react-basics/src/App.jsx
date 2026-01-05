@@ -15,7 +15,12 @@ import RegisterPage from './pages/RegisterPage';
 // Day 21 components
 import TodoReducer from './components/TodoReducer';
 import ShoppingCart from './components/ShoppingCart';
+
+import PerformanceDemo from './components/PerformanceDemo';
 import './App.css';
+import UseMemoDemo from './components/UseMemoDemo';
+import UseCallbackDemo from './components/UseCallbackDemo';
+import LazyLoadDemo from './components/LazyLoadDemo';
 
 function App() {
   return (
@@ -38,6 +43,10 @@ function App() {
             <Route path="examples/todo-reducer" element={<TodoReducer />} />
             <Route path="examples/shopping-cart" element={<ShoppingCart />} />
 
+            <Route path='examples/performance-demo' element={<PerformanceDemo />} />
+            <Route path='examples/usememodemo' element={<UseMemoDemo />} />
+            <Route path='examples/usecallback' element={<UseCallbackDemo />} />
+            <Route path="examples/lazy-load" element={<LazyLoadDemo />} />
             {/* 404 catch-all */}
             <Route path="*" element={<NotFoundPage />} />
           </Route>

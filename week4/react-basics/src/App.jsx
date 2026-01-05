@@ -1,28 +1,34 @@
 import './App.css'
-import { useState } from 'react';
+import { use, useState } from 'react';
 import Profile from './Profile';
 import Button from './components/Button';
 import Card from './components/Card';
 import UserCard from './components/UserCard';
+import ProductCard from './components/ProductCard';
+import TodoApp from './components/TodoApp';
 
 function App() {
 
   const [showProfile, setShowProfile] = useState(false);
 
   return (
-    <Card title="Profile Form/Counter">
-      <div className="container">
-        <button onClick={() => setShowProfile(!showProfile)}
-        >
-          {showProfile ? 'Show Counter' : 'Show Profile Form'}
-        </button>
+    // <Card title="Profile Form/Counter">
+    //   <div className="container">
+    //     <button onClick={() => setShowProfile(!showProfile)}
+    //     >
+    //       {showProfile ? 'Show Counter' : 'Show Profile Form'}
+    //     </button>
 
-        <div style={{ marginTop: '2rem' }}>
-          {showProfile ? <Profile /> : <Counter />}
-        </div>
+    //     <div style={{ marginTop: '2rem' }}>
+    //       {showProfile ? <Profile /> : <Counter />}
+    //     </div>
 
-      </div>
-    </Card>
+    //   </div>
+    // </Card>
+
+    <div className="container">
+      <TodoApp />
+    </div>
   )
 }
 
@@ -68,6 +74,8 @@ function Counter() {
       <Card title="userInfo">
         <UserCards />
       </Card>
+
+      <ProductCards />
     </div >
   )
 }
@@ -106,5 +114,72 @@ function UserCards() {
       ))}
     </>
   )
+}
+
+function ProductCards() {
+  const [cart, setCart] = useState([]);
+
+  const products = [
+    {
+      id: 1,
+      name: 'Python Crash Course Book',
+      price: 39.99,
+      image: 'https://via.placeholder.com/300x200/3498db/ffffff?text=Python+Book',
+      inStock: true
+    },
+    {
+      id: 2,
+      name: 'React Masterclass Course',
+      price: 99.99,
+      image: 'https://via.placeholder.com/300x200/61dafb/ffffff?text=React+Course',
+      inStock: true
+    },
+    {
+      id: 3,
+      name: 'Django for Professionals',
+      price: 49.99,
+      image: 'https://via.placeholder.com/300x200/092e20/ffffff?text=Django+Book',
+      inStock: false
+    }
+  ];
+
+  const handleBuy = (productName, price) => {
+    setCart([...cart, { name: productName, price }]);
+    alert(`Added ${productName} to cart!`);
+  }
+
+  const cartTotal = cart.reduce((sum, item) => sum + item.price, 0);
+
+  return (
+    <div className='container'>
+      <h1>Product Store</h1>
+      {/* Cart Summary */}
+      <div style={{
+        background: '#ecf0f1',
+        padding: '1rem',
+        borderRadius: '4px',
+        marginBottom: '2rem'
+      }}>
+        <h3>Cart: {cart.length} items</h3>
+        <p>Total: ${cartTotal.toFixed(2)}</p>
+      </div>
+
+      {/* Product Grid */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+        gap: '1rem'
+      }}>
+        {products.map(product => (
+          <ProductCard key={product.id}
+            name={product.name}
+            price={product.price}
+            image={product.image}
+            inStock={product.inStock}
+            onBuy={handleBuy} />
+        ))}
+      </div>
+    </div >
+  );
 }
 export default App

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
-function CreatePost({ token, onPostCreated }) {
+function CreatePostPage({ token, onPostCreated }) {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [loading, setLoading] = useState(false);
@@ -143,4 +143,4 @@ function CreatePost({ token, onPostCreated }) {
     );
 }
 
-export default CreatePost;
+export default CreatePostPage;

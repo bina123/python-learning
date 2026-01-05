@@ -11,6 +11,10 @@ import ProtectedRoute from './components/ProtectedRoute';
 import CreatePostPage from './pages/CreatePostPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+
+// Day 21 components
+import TodoReducer from './components/TodoReducer';
+import ShoppingCart from './components/ShoppingCart';
 import './App.css';
 
 function App() {
@@ -28,6 +32,11 @@ function App() {
             <Route path="login" element={<LoginPage />} />
             <Route path="register" element={<RegisterPage />} />
             <Route path="about" element={<AboutPage />} />
+
+
+            {/* Day 21: useReducer examples */}
+            <Route path="examples/todo-reducer" element={<TodoReducer />} />
+            <Route path="examples/shopping-cart" element={<ShoppingCart />} />
 
             {/* 404 catch-all */}
             <Route path="*" element={<NotFoundPage />} />

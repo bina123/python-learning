@@ -21,7 +21,11 @@ function useDebounce(value, delay = 500) {
         return () => clearTimeout(timer);
     }, [value, delay]);
 
-    return debouncedValue;
+    const cancel = () => {
+        setDebouncedValue(value);
+    };
+
+    return [debouncedValue, cancel];
 }
 
 export default useDebounce;

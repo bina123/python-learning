@@ -16,11 +16,22 @@ import RegisterPage from './pages/RegisterPage';
 import TodoReducer from './components/TodoReducer';
 import ShoppingCart from './components/ShoppingCart';
 
+// Day 22
 import PerformanceDemo from './components/PerformanceDemo';
 import './App.css';
 import UseMemoDemo from './components/UseMemoDemo';
 import UseCallbackDemo from './components/UseCallbackDemo';
 import LazyLoadDemo from './components/LazyLoadDemo';
+
+
+// Day 23
+import UseAsyncDemo from './components/UseAsyncDemo';
+import UseLocalStorageDemo from './components/UseLocalStorageDemo';
+import UseMediaQueryDemo from './components/UseMediaQueryDemo';
+import UseOnScreenDemo from './components/UseOnScreenDemo';
+import UsePreviousDemo from './components/UsePreviousDemo';
+import UseAsyncTest from './components/UseAsyncTest';
+
 
 function App() {
   return (
@@ -43,10 +54,20 @@ function App() {
             <Route path="examples/todo-reducer" element={<TodoReducer />} />
             <Route path="examples/shopping-cart" element={<ShoppingCart />} />
 
+            {/* Day 23: Performance */}
             <Route path='examples/performance-demo' element={<PerformanceDemo />} />
             <Route path='examples/usememodemo' element={<UseMemoDemo />} />
             <Route path='examples/usecallback' element={<UseCallbackDemo />} />
             <Route path="examples/lazy-load" element={<LazyLoadDemo />} />
+
+            {/* Day 23: Advanced Hooks */}
+            <Route path="examples/use-async" element={<UseAsyncDemo />} />
+            <Route path="examples/use-localstorage" element={<UseLocalStorageDemo />} />
+            <Route path="examples/use-mediaquery" element={<UseMediaQueryDemo />} />
+            <Route path="examples/use-onscreen" element={<UseOnScreenDemo />} />
+            <Route path="examples/use-previous" element={<UsePreviousDemo />} />
+            <Route path="examples/use-async-test" element={<UseAsyncTest />} />
+
             {/* 404 catch-all */}
             <Route path="*" element={<NotFoundPage />} />
           </Route>

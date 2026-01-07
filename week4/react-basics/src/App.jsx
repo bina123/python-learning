@@ -37,6 +37,12 @@ import ErrorBoundaryDemo from './components/ErrorBoundaryDemo';
 import SuspenseDemo from './components/SuspenseDemo';
 import ErrorSuspenseDemo from './components/ErrorSuspenseDemo';
 
+// Day 25
+import BasicForm from './components/forms/BasicForm';
+import ZodForm from './components/forms/ZodForm';
+import DynamicForm from './components/forms/DynamicForm';
+import MultiStepForm from './components/forms/MultiStepForm';
+
 function App() {
   return (
     <AuthProvider>
@@ -76,6 +82,12 @@ function App() {
             <Route path="examples/error-boundary" element={<ErrorBoundaryDemo />} />
             <Route path="examples/suspense" element={<SuspenseDemo />} />
             <Route path="examples/error-suspense" element={<ErrorSuspenseDemo />} />
+
+            {/* Day 25: Forms */}
+            <Route path="examples/form-basic" element={<BasicForm />} />
+            <Route path="examples/form-zod" element={<ZodForm />} />
+            <Route path="examples/form-dynamic" element={<DynamicForm />} />
+            <Route path="examples/form-multistep" element={<MultiStepForm />} />
 
             {/* 404 catch-all */}
             <Route path="*" element={<NotFoundPage />} />

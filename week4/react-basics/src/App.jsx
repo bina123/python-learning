@@ -43,6 +43,12 @@ import ZodForm from './components/forms/ZodForm';
 import DynamicForm from './components/forms/DynamicForm';
 import MultiStepForm from './components/forms/MultiStepForm';
 
+// Day 26
+import CounterDemo from './components/zustand/CounterDemo';
+import TodoDemo from './components/zustand/TodoDemo';
+import UserDemo from './components/zustand/UserDemo';
+import CartDemo from './components/zustand/CartDemo';
+
 function App() {
   return (
     <AuthProvider>
@@ -88,6 +94,12 @@ function App() {
             <Route path="examples/form-zod" element={<ZodForm />} />
             <Route path="examples/form-dynamic" element={<DynamicForm />} />
             <Route path="examples/form-multistep" element={<MultiStepForm />} />
+
+            {/* Day 26: Zustand */}
+            <Route path="examples/zustand-counter" element={<CounterDemo />} />
+            <Route path="examples/zustand-todo" element={<TodoDemo />} />
+            <Route path="examples/zustand-user" element={<UserDemo />} />
+            <Route path="examples/zustand-cart" element={<CartDemo />} />
 
             {/* 404 catch-all */}
             <Route path="*" element={<NotFoundPage />} />

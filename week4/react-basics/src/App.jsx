@@ -32,6 +32,10 @@ import UseOnScreenDemo from './components/UseOnScreenDemo';
 import UsePreviousDemo from './components/UsePreviousDemo';
 import UseAsyncTest from './components/UseAsyncTest';
 
+// Day 24
+import ErrorBoundaryDemo from './components/ErrorBoundaryDemo';
+import SuspenseDemo from './components/SuspenseDemo';
+import ErrorSuspenseDemo from './components/ErrorSuspenseDemo';
 
 function App() {
   return (
@@ -67,6 +71,11 @@ function App() {
             <Route path="examples/use-onscreen" element={<UseOnScreenDemo />} />
             <Route path="examples/use-previous" element={<UsePreviousDemo />} />
             <Route path="examples/use-async-test" element={<UseAsyncTest />} />
+
+            {/* Day 24: Error Handling */}
+            <Route path="examples/error-boundary" element={<ErrorBoundaryDemo />} />
+            <Route path="examples/suspense" element={<SuspenseDemo />} />
+            <Route path="examples/error-suspense" element={<ErrorSuspenseDemo />} />
 
             {/* 404 catch-all */}
             <Route path="*" element={<NotFoundPage />} />

@@ -49,6 +49,12 @@ import TodoDemo from './components/zustand/TodoDemo';
 import UserDemo from './components/zustand/UserDemo';
 import CartDemo from './components/zustand/CartDemo';
 
+// Day 27
+import PostsQuery from './components/react-query/PostsQuery';
+import PostDetailQuery from './components/react-query/PostDetailQuery';
+import MutationsDemo from './components/react-query/MutationsDemo';
+import InfiniteQueryDemo from './components/react-query/InfiniteQueryDemo';
+
 function App() {
   return (
     <AuthProvider>
@@ -100,6 +106,12 @@ function App() {
             <Route path="examples/zustand-todo" element={<TodoDemo />} />
             <Route path="examples/zustand-user" element={<UserDemo />} />
             <Route path="examples/zustand-cart" element={<CartDemo />} />
+
+            {/* Day 27: React Query */}
+            <Route path="examples/react-query-basic" element={<PostsQuery />} />
+            <Route path="examples/react-query-detail" element={<PostDetailQuery />} />
+            <Route path="examples/react-query-mutations" element={<MutationsDemo />} />
+            <Route path="examples/react-query-infinite" element={<InfiniteQueryDemo />} />
 
             {/* 404 catch-all */}
             <Route path="*" element={<NotFoundPage />} />

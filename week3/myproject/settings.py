@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +42,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'drf_yasg',
     'blog',
-    'corsheaders'
+    'corsheaders',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -227,4 +229,21 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+
+# Add WebSocket to allowed origins
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
 CORS_ALLOW_ALL_ORIGINS = True
+
+# Channels Configuration
+ASGI_APPLICATION = 'blog_project.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}

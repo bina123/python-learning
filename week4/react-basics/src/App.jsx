@@ -55,6 +55,10 @@ import PostDetailQuery from './components/react-query/PostDetailQuery';
 import MutationsDemo from './components/react-query/MutationsDemo';
 import InfiniteQueryDemo from './components/react-query/InfiniteQueryDemo';
 
+// Day 28
+import ChatRoom from './components/websockets/ChatRoom';
+import NotificationsDemo from './components/websockets/NotificationsDemo';
+
 function App() {
   return (
     <AuthProvider>
@@ -112,6 +116,10 @@ function App() {
             <Route path="examples/react-query-detail" element={<PostDetailQuery />} />
             <Route path="examples/react-query-mutations" element={<MutationsDemo />} />
             <Route path="examples/react-query-infinite" element={<InfiniteQueryDemo />} />
+
+            {/* Day 28: WebSockets */}
+            <Route path="examples/websocket-chat" element={<ChatRoom />} />
+            <Route path="examples/websocket-notifications" element={<NotificationsDemo />} />
 
             {/* 404 catch-all */}
             <Route path="*" element={<NotFoundPage />} />

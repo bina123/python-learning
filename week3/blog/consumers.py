@@ -2,17 +2,14 @@
 
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
-from channels.db import database_sync_to_async
-from django.contrib.auth.models import User
 from datetime import datetime
 
 class ChatConsumer(AsyncWebsocketConsumer):
+    # ... keep existing ChatConsumer code ...
     async def connect(self):
-        # Get room name from URL
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = f'chat_{self.room_name}'
 
-        # Join room group
         await self.channel_layer.group_add(
             self.room_group_name,
             self.channel_name
@@ -20,31 +17,22 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         await self.accept()
 
-        # Send welcome message
         await self.send(text_data=json.dumps({
             'type': 'connection_established',
             'message': f'You are now connected to {self.room_name}'
         }))
 
     async def disconnect(self, close_code):
-        # Leave room group
         await self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name
         )
 
-    # Receive message from WebSocket
     async def receive(self, text_data):
         data = json.loads(text_data)
         message = data['message']
         username = data.get('username', 'Anonymous')
-        
-        # Get user info if authenticated
-        user = self.scope.get('user')
-        if user and user.is_authenticated:
-            username = user.username
 
-        # Send message to room group
         await self.channel_layer.group_send(
             self.room_group_name,
             {
@@ -55,9 +43,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             }
         )
 
-    # Receive message from room group
     async def chat_message(self, event):
-        # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'type': 'chat',
             'message': event['message'],
@@ -66,30 +52,42 @@ class ChatConsumer(AsyncWebsocketConsumer):
         }))
 
 
+# Updated NotificationConsumer (no auth required for demo)
 class NotificationConsumer(AsyncWebsocketConsumer):
     async def connect(self):
+        # For demo: accept all connections
+        # In production: check authentication
         self.user = self.scope.get('user')
         
+        # Create a unique group for this user
         if self.user and self.user.is_authenticated:
-            # User-specific notification group
             self.notification_group_name = f'notifications_{self.user.id}'
-            
-            await self.channel_layer.group_add(
-                self.notification_group_name,
-                self.channel_name
-            )
-            
-            await self.accept()
         else:
-            # Reject connection if not authenticated
-            await self.close()
+            # For anonymous users, use session key or generate random ID
+            session_key = self.scope.get('session', {}).get('session_key', 'anonymous')
+            self.notification_group_name = f'notifications_{session_key}'
+        
+        # Join notification group
+        await self.channel_layer.group_add(
+            self.notification_group_name,
+            self.channel_name
+        )
+        
+        # Accept connection
+        await self.accept()
+        
+        # Send welcome message
+        await self.send(text_data=json.dumps({
+            'type': 'connection_established',
+            'message': 'Connected to notifications!'
+        }))
 
     async def disconnect(self, close_code):
-        if self.user and self.user.is_authenticated:
-            await self.channel_layer.group_discard(
-                self.notification_group_name,
-                self.channel_name
-            )
+        # Leave notification group
+        await self.channel_layer.group_discard(
+            self.notification_group_name,
+            self.channel_name
+        )
 
     # Receive notification from group
     async def send_notification(self, event):

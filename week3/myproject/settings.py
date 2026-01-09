@@ -237,7 +237,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 CORS_ALLOW_ALL_ORIGINS = True
 
 # Channels Configuration
-ASGI_APPLICATION = 'blog_project.asgi.application'
+ASGI_APPLICATION = 'myproject.asgi.application'
 
 CHANNEL_LAYERS = {
     'default': {
